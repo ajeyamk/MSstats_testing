@@ -2,5 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-./datasets
-./single_outputs
+./datasets/*
+./single_outputs/*
