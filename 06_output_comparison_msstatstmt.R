@@ -1,5 +1,5 @@
 library(data.table)
-source("./functions.R")
+source("./02_utility_functions.R")
 getStatsSingleVersion = function(df, version) {
     data.table(
         version = version,
@@ -81,4 +81,5 @@ ipsc_v4_check[, BioReplicate := as.factor(as.character(BioReplicate))]
 ipsc_compare = merge(ipsc_v4_check, as.data.table(ipsc_v3),
                      by = setdiff(colnames(ipsc_v4), "Intensity"),
                      all.x = TRUE)
-uniqueN(ipsc_compare[is.na(Intensity.y) & !is.na(Intensity.x), .(PeptideSequence, Charge)])
+unique(ipsc_compare[is.na(Intensity.y) & !is.na(Intensity.x), .(PeptideSequence, Charge)])
+

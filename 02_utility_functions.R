@@ -86,6 +86,34 @@ count_design = function(df, col) {
     }
 }
 
+getStatsSingleVersion = function(df, version) {
+    data.table(
+        version = version,
+        n_features = count_features(df),
+        n_proteins = count_proteins(df),
+        n_peptides = count_peptides(df),
+        n_infinite = count_infinite(df),
+        n_missing = count_missing_values(df),
+        n_zero = count_zero_values(df),
+        n_exactly_zero = count_exactly_zero(df),
+        n_rows = count_rows(df),
+        n_cols = count_cols(df),
+        n_conditions = count_design(df, "Condition"),
+        n_bioreps = count_design(df, "BioReplicate"),
+        n_runs = count_design(df, "Run"),
+        n_tech_replicates = count_design(df, "TechRep"),
+        n_tech_rep_mixture = count_design(df, "TechRepMixture"),
+        n_fractions = count_fractions(df),
+        n_channels = count_design(df, "Channel"))
+}
+getStats = function(v3, v4) {
+    rbindlist(
+        list(getStatsSingleVersion(as.data.table(v3), "v3"),
+             getStatsSingleVersion(as.data.table(as(v4, "data.frame")), "v4"))
+    )
+    # list(class(v3), class(v4))
+}
+
 # files = list.files("./single_outputs", full.names = TRUE)
 # statistics = lapply(files, function(path) {
 #     result = tryCatch({
