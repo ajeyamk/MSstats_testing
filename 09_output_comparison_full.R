@@ -21,8 +21,6 @@ get_comparison_df = function(path) {
     }))
     stats_lf
 }
-
-
 problems = list()
 save_single_output = function(metadata, output_path = "./single_outputs/", remove_single_feature = FALSE, remove_few = TRUE) {
     remove_few_lf = ifelse(remove_few, "remove", "keep")
