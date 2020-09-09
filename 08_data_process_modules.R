@@ -215,7 +215,8 @@
         colnames(raw.temp) <- c("Protein", "Peptide", "Transition", "Label",
                                 "Condition", "Sample", "Run", "Intensity")
     }
-    list(raw.temp, processout)
+    # list(raw.temp, processout)
+    raw.temp
 }
 
 
@@ -254,7 +255,8 @@
 
     processout <- rbind(processout, c("New input format : made new columns for analysis - okay"))
     write.table(processout, file=finalfile, row.names=FALSE)
-    list(work, processout)
+    # list(work, processout)
+    work
 }
 
 .intensitiesOld = function(work, processout, finalfile) {
@@ -284,7 +286,8 @@
                         c(paste0("Logarithm transformation: log", logTrans,
                                  " transformation is done - okay")))
     write.table(processout, file=finalfile, row.names=FALSE)
-    list(work, processout)
+    # list(work, processout)
+    work
 }
 
 
@@ -466,7 +469,8 @@
     } else {  ## no fractionation
         work$FRACTION <- 1
     }
-    list(work, processout)
+    # list(work, processout)
+    work
 }
 
 .balancedOld = function(work, checkMultirun, fillIncompleteRows, processout, finalfile) {
@@ -1508,7 +1512,8 @@
         ## for duplicate, in future
 
     } # end multiple method
-    list(work, processout)
+    # list(work, processout)
+    work
 }
 
 .prenormOld = function(work, processout, finalfile) {
@@ -1534,7 +1539,8 @@
     processout <- rbind(processout, c("Factorize in columns(GROUP, SUBJECT, GROUP_ORIGINAL,
 	                                  SUBJECT_ORIGINAL, SUBJECT_ORIGINAL_NESTED, FEATURE, RUN) - okay"))
     write.table(processout, file=finalfile, row.names=FALSE)
-    list(work, processout)
+    # list(work, processout)
+    work
 }
 
 
@@ -1848,7 +1854,8 @@
         write.table(processout, file=finalfile, row.names=FALSE)
 
     }
-    list(work, processout)
+    # list(work, processout)
+    work
 }
 
 
@@ -1992,7 +1999,8 @@
         work[-which(work$FEATURE %in% selectfeature), 'remove']	<- TRUE
 
     }
-    list(work, processout)
+    # list(work, processout)
+    work
 }
 
 
