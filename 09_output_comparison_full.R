@@ -26,7 +26,9 @@ save_single_output = function(metadata, output_path = "./single_outputs/", remov
     remove_few_lf = ifelse(remove_few, "remove", "keep")
     for (dataset in metadata) {
         tryCatch({
+            names = names(dataset)
             dataset = lapply(dataset, function(x) gsub("./datasets/", "", x))
+            names(dataset) = names
             if (dataset$tool == "MaxQuant") {
                 evidence = readRDS(paste0("./processed_data/", gsub("tsv|csv|xls|txt", "RDS", dataset$evidence_path)))
                 protein_groups = readRDS(paste0("./processed_data/", gsub("tsv|csv|xls|txt", "RDS", dataset$protein_groups)))
@@ -68,10 +70,10 @@ save_single_output = function(metadata, output_path = "./single_outputs/", remov
                                                                   rmProtein_with1Feature = remove_single_feature)
                 } else {
                     v3 = MSstats::OpenMStoMSstatsFormat(input,
-                                                        removeProtein_with1Peptide = remove_single_feature,
+                                                        removeProtein_with1Feature = remove_single_feature,
                                                         fewMeasurements = remove_few_lf)
                     v4 = MSstatsConvert::OpenMStoMSstatsFormat(input,
-                                                               removeProtein_with1Peptide = remove_single_feature,
+                                                               removeProtein_with1Feature = remove_single_feature,
                                                                fewMeasurements = remove_few_lf)
                 }
             } else {
@@ -153,10 +155,15 @@ save_single_output = function(metadata, output_path = "./single_outputs/", remov
 }
 
 # metadata = metadata[sapply(metadata, function(x) x$tool) == "Skyline"]
+metadata = metadata[!(sapply(metadata, function(x) x$name) %in% c("Azimifa2014"))]
+# metadata = metadata[sapply(metadata, function(x) x$name) == "Rakus2016"]
 save_single_output(metadata, "./single_outputs/")
-save_single_output(metadata, output_path = "./single_outputs_no_few/", remove_single_feature = FALSE, remove_few = FALSE)
-save_single_output(metadata, output_path = "./single_outputs_no_singles/", remove_single_feature = TRUE, remove_few = TRUE)
-
 compare_default = get_comparison_df("./single_outputs/")
+
+
+save_single_output(metadata, output_path = "./single_outputs_no_few/", remove_single_feature = FALSE, remove_few = FALSE)
 compare_no_few = get_comparison_df("./single_outputs_no_few/")
+
+
+save_single_output(metadata, output_path = "./single_outputs_no_singles/", remove_single_feature = TRUE, remove_few = TRUE)
 compare_no_singles = get_comparison_df("./single_outputs_no_singles/")

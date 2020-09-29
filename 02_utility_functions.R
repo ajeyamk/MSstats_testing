@@ -86,6 +86,14 @@ count_design = function(df, col) {
     }
 }
 
+count_larger_than = function(df, threshold) {
+    sum(df$Intensity > threshold, na.rm = TRUE)
+}
+
+count_01 = function(df) {
+    sum(!is.na(df$Intensity) & df$Intensity > 0 & df$Intensity <= 1)
+}
+
 getStatsSingleVersion = function(df, version) {
     data.table(
         version = version,
@@ -96,6 +104,9 @@ getStatsSingleVersion = function(df, version) {
         n_missing = count_missing_values(df),
         n_zero = count_zero_values(df),
         n_exactly_zero = count_exactly_zero(df),
+        n_greater_than_0 = count_larger_than(df, 0),
+        n_greater_than_1 = count_larger_than(df, 1),
+        n_between_0_1 = count_01(df),
         n_rows = count_rows(df),
         n_cols = count_cols(df),
         n_conditions = count_design(df, "Condition"),
